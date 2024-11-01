@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Bill</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 30px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+    }
+
+    table {
+      width: 90%;
+      max-width: 900px;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    th, td {
+      border: none;
+      padding: 15px 10px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    th {
+      background: rgba(0, 0, 0, 0.7);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    input[type="checkbox"] {
+      transform: scale(1.3);
+      cursor: pointer;
+      accent-color: #00c6ff;
+    }
+
+    button {
+      margin-top: 40px;
+      padding: 15px 50px;
+      font-size: 20px;
+      letter-spacing: 4px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(90deg, #0072ff, #00c6ff);
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+      text-transform: uppercase;
+      font-weight: 600;
+      box-shadow: 0 5px 15px rgba(0, 114, 255, 0.4);
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(0, 198, 255, 0.5);
+    }
+
+    #billOutput {
+      margin-top: 30px;
+      font-size: 1.3em;
+      text-align: center;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
+    }
+
+    #billOutput span {
+      color: #00c6ff;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🍔 Create Your Bill 🍟</h1>
+
+  <table>
+    <tr>
+      <th>Add Items</th>
+      <th>Items</th>
+      <th>Soft Drinks</th>
+      <th>Fries</th>
+      <th>Dessert</th>
+    </tr>
+    <tr>
+      <td><input type="checkbox" class="add-item"></td>
+      <td class="item-name">Zinger Burger</td>
+      <td><input type="checkbox" class="soft"></td>
+      <td><input type="checkbox" class="fries"></td>
+      <td><input type="checkbox" class="dessert"></td>
+    </tr>
+    <tr>
+      <td><input type="checkbox" class="add-item"></td>
+      <td class="item-name">Egg Burger</td>
+      <td><input type="checkbox" class="soft"></td>
+      <td><input type="checkbox" class="fries"></td>
+      <td><input type="checkbox" class="dessert"></td>
+    </tr>
+    <tr>
+      <td><input type="checkbox" class="add-item"></td>
+      <td class="item-name">Kabab</td>
+      <td><input type="checkbox" class="soft"></td>
+      <td><input type="checkbox" class="fries"></td>
+      <td><input type="checkbox" class="dessert"></td>
+    </tr>
+    <tr>
+      <td><input type="checkbox" class="add-item"></td>
+      <td class="item-name">Roll</td>
+      <td><input type="checkbox" class="soft"></td>
+      <td><input type="checkbox" class="fries"></td>
+      <td><input type="checkbox" class="dessert"></td>
+    </tr>
+  </table>
+
+  <button onclick="createBill()">Create Bill</button>
+
+  <div id="billOutput">Your selected items will appear here 👇</div>
+
+  <script>
+    function createBill() {
+      let rows = document.querySelectorAll("table tr");
+      let bill = "";
+
+      rows.forEach((row, index) => {
+        if (index === 0) return; // skip header row
+
+        let addItem = row.querySelector(".add-item");
+        if (addItem && addItem.checked) {
+          let itemName = row.querySelector(".item-name").innerText;
+          let soft = row.querySelector(".soft").checked;
+          let fries = row.querySelector(".fries").checked;
+          let dessert = row.querySelector(".dessert").checked;
+
+          let extras = [];
+          if (soft) extras.push("Soft Drink");
+          if (fries) extras.push("Fries");
+          if (dessert) extras.push("Dessert");
+
+          if (extras.length > 0) {
+            bill += `<div>🍔 <span>${itemName}</span> with ${extras.join(", ")}</div>`;
+          } else {
+            bill += `<div>🍔 <span>${itemName}</span></div>`;
+          }
+        }
+      });
+
+      document.getElementById("billOutput").innerHTML = bill || "⚠️ No items selected yet!";
+    }
+  </script>
+
+</body>
+</html>
