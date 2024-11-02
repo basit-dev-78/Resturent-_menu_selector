@@ -176,7 +176,7 @@
           if (dessert) extras.push("Dessert");
 
           if (extras.length > 0) {
-            bill += `<div>🍔 <span>${itemName}</span> with ${extras.join(", ")}</div>`;
+            bill += `<div>🍔 <span>${itemName}</span> with ${extras.join(" and ")}</div>`;
           } else {
             bill += `<div>🍔 <span>${itemName}</span></div>`;
           }
